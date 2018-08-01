@@ -70,7 +70,7 @@ while (1):
 
     # cv2.namedWindow(winname.format(fold, project_index, length))
     cv2.namedWindow('label image software')
-    last_key = ''
+    last_key = []
     while True:
         jupmed = False
         index = np.max([0, index])
@@ -94,56 +94,59 @@ while (1):
             index += 12
         elif c == keyvalue['l']:
             infos[video][str(index)] = 'exception'
-            last_key = str(index)
+            last_key.append(str(index))
             with open(tmp, "w") as f:
                 json.dump(infos, f)
                 logging('write {} in {}'.format('exception', video))
-        elif c== keyvalue['i']:
+        elif c == keyvalue['i']:
             infos[video][str(index)] = 'tStart'
-            last_key = str(index)
+            last_key.append(str(index))
             with open(tmp, "w") as f:
                 json.dump(infos, f)
                 logging('save {} in {} succeed'.format('tStart time', video))
 
         elif c == keyvalue['t']:
             infos[video][str(index)] = 'tPNf'
-            last_key = str(index)
+            last_key.append(str(index))
             with open(tmp, "w") as f:
                 json.dump(infos, f)
                 logging('save {} in {} succeed'.format('tPNf time', video))
 
         elif c == keyvalue['2']:
             infos[video][str(index)] = 't2'
-            last_key = str(index)
+            last_key.append(str(index))
             with open(tmp, "w") as f:
                 json.dump(infos, f)
                 logging('save {} in {} succeed'.format('t2 time', video))
 
         elif c == keyvalue['3']:
             infos[video][str(index)] = 't3'
+            last_key.append(str(index))
             with open(tmp, "w") as f:
                 json.dump(infos, f)
                 logging('save {} in {} succeed'.format('t3 time', video))
 
         elif c == keyvalue['4']:
             infos[video][str(index)] = 't4'
-            last_key = str(index)
+            last_key.append(str(index))
             with open(tmp, "w") as f:
                 json.dump(infos, f)
                 logging('save {} in {} succeed'.format('t4 time', video))
 
         elif c == keyvalue['5']:
             infos[video][str(index)] = 't4+'
-            last_key = str(index)
+            last_key.append(str(index))
             with open(tmp, "w") as f:
                 json.dump(infos, f)
                 logging('save {} in {} succeed'.format('t4+ time', video))
         elif c == keyvalue['z']:
-            if last_key != '':
-                try:
-                    del infos[video][last_key]
-                except KeyError:
-                    pass
+            try:
+                if len(last_key) > 0:
+                    print(last_key[-1])
+                    del infos[video][last_key[-1]]
+                    del last_key[-1]
+            except KeyError:
+                pass
         elif c == keyvalue['[']:
             project_index -= 1
             if infos[video] == {}:
