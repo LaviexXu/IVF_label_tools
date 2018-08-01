@@ -1,5 +1,3 @@
 \.idea/
 __pycache__/
-label_video
-mouse_listen_exaple.py
-tmp.json
+tmp\.json
