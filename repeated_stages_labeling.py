@@ -126,7 +126,7 @@ while (1):
                 logging('save {} in {} succeed'.format('t3 time', video))
 
         elif c == keyvalue['4']:
-            infos[video]['t4'] = int(index)
+            infos[video][str(index)] = 't4'
             last_key = str(index)
             with open(tmp, "w") as f:
                 json.dump(infos, f)
