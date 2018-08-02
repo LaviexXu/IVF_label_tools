@@ -22,6 +22,7 @@ keyvalue = {
     '4': 52,
     '5': 53,
     'a': 97,
+    'c': 99,
     'd': 100,
     'i': 105,
     'q': 113,
@@ -51,11 +52,10 @@ length = len(videos)
 keys_init = list(infos.keys())
 pro_idx_init = np.array([True if item in keys_init else False for item in videos])
 project_index = np.min(np.where(pro_idx_init == False)[0])
-
 jumped = False
 
 # for i in range(start, len(folds)):
-while (1):
+while 1:
     project_index = np.max([0, project_index])
     project_index = np.min([project_index, len(videos) - 1]) # clip project index
 
@@ -92,6 +92,16 @@ while (1):
             index -= 12
         elif c == keyvalue['d']:
             index += 12
+        elif c == keyvalue['c']:
+            try:
+                del infos[video]
+                with open(tmp, "w") as f:
+                    json.dump(infos, f)
+                    logging('clear all labels in {}'.format('video'))
+            except KeyError:
+                pass
+            infos[video] = {}
+            last_key = []
         elif c == keyvalue['l']:
             infos[video][str(index)] = 'exception'
             last_key.append(str(index))
