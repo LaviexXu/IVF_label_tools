@@ -13,6 +13,9 @@ label_mapping = {
 with open('tmp.json') as json_file:
     video_infos = json.load(json_file)
 
+# the length of labels of one video
+last_frame_index = 350
+
 fix_dimension_labels = {}
 for video in video_infos:
     cur_video_info = video_infos[video]
@@ -20,10 +23,10 @@ for video in video_infos:
     labels = list()
     break_flag = False
     for i in range(len(sorted_label)):
-        if i < len(sorted_label)-1 and int(sorted_label[i+1][0]) < 300:
+        if i < len(sorted_label)-1 and int(sorted_label[i+1][0]) < last_frame_index:
             length = int(sorted_label[i+1][0])-int(sorted_label[i][0])
         else:
-            length = 300 - int(sorted_label[i][0])
+            length = last_frame_index - int(sorted_label[i][0])
             break_flag = True
         temp = [label_mapping[sorted_label[i][1]]]*length
         labels += temp
