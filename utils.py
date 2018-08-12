@@ -36,3 +36,25 @@ def read_video_frames(path):
             frames.append(cur_frame)
     video.release()
     return frames
+
+
+def read_video_frames(path, size):
+    video = cv2.VideoCapture(path)
+    frames = list()
+    if video.isOpened():
+        rval, cur_frame = video.read()
+        frames.append(cur_frame)
+        while rval:
+            rval, cur_frame = video.read()
+            cur_frame = cv2.resize(cur_frame, (size, size), interpolation=cv2.INTER_LINEAR)
+            frames.append(cur_frame)
+    video.release()
+    return frames
+
+
+def resize_frames(frames, size):
+    resized_frames = list()
+    for frame in frames:
+        r_frame = cv2.resize(frame, (size, size), interpolation=cv2.INTER_LINEAR)
+        resized_frames.append(r_frame)
+    return resized_frames
